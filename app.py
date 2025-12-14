@@ -92,10 +92,14 @@ if user_input:
         with st.spinner("Analizando consulta técnica..."):
             prompt = SYSTEM_PROMPT + "\n\nConsulta del usuario:\n" + user_input
 
-            response = model.generate_content(prompt)
-            answer = response.text
+            try:
+    response = model.generate_content(prompt)
+    answer = response.text
+except Exception:
+    answer = "⚠️ Error al conectar con la IA. Inténtalo de nuevo en unos segundos."
 
-            st.markdown(answer)
+st.markdown(answer)
+
 
     st.session_state.messages.append(
         {"role": "assistant", "content": answer}
